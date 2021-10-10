@@ -11,7 +11,7 @@ const Player: FC<{player:PlayerModel ,victoriesHandler:Function ,lossesHandler:F
 
     const onClickVictories = () => {
         setIsPlayerUpdate(true)
-        victoriesHandler([player.id])
+        victoriesHandler([player.id])[0]
         .then(() => setIsPlayerUpdate(false))
     }
 

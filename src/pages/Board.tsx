@@ -16,7 +16,7 @@ const Board: FC = () => {
 
     useEffect(() => {
         console.log("board useEffect");
-        
+
         fetch('https://table-football-c48e9-default-rtdb.firebaseio.com/player.json')
             .then(response => response.json())
             .then(players => {
@@ -37,7 +37,7 @@ const Board: FC = () => {
             });
     }, [])
 
-    
+
 
     const onSearchHelper = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
@@ -51,7 +51,7 @@ const Board: FC = () => {
     const victoriesHandler = (playerId: string[]) => {
         let playersUpdate: PlayerModel[] = [...playerListTemp]
         let players: PlayerModel[] = []
-        
+
         for (let i = 0; i < playersUpdate.length; i++) {
             for (let j = 0; j < playerId.length; j++) {
                 if (playersUpdate[i].id === playerId[j]) {
@@ -60,36 +60,33 @@ const Board: FC = () => {
                 }
             }
         }
-
-        for (let i = 0; i < players.length; i++) {
-            if (players[i] !== undefined) {
-                return fetch(`https://table-football-c48e9-default-rtdb.firebaseio.com/player/${players[i].id}.json`,
-                    {
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                        },
-                        method: "PUT",
-                        body: JSON.stringify({
-                            img: players[i]?.img,
-                            losses: players[i]?.losses,
-                            name: players[i]?.name,
-                            victories: players[i]?.victories
-                        })
-                    }
-                )
-                    .then(response => {
-                        return response.json()
+        return players.map(player => {
+            return fetch(`https://table-football-c48e9-default-rtdb.firebaseio.com/player/${player.id}.json`,
+                {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    method: "PUT",
+                    body: JSON.stringify({
+                        img: player?.img,
+                        losses: player?.losses,
+                        name: player?.name,
+                        victories: player?.victories
                     })
-                    .then(data => {
-                        setPlayerListTemp(playersUpdate);
-                        console.log('Success:', data);
-                    })
-                    .catch((error) => {
-                        console.error('Error:', error);
-                    });
-            }
-        }
+                }
+            )
+                .then(response => {
+                    return response.json()
+                })
+                .then(data => {
+                    setPlayerListTemp(playersUpdate);
+                    console.log('Success:', data);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        })
     }
 
     const lossesHandler = (playerId: string) => {
@@ -105,35 +102,33 @@ const Board: FC = () => {
             }
         }
 
-        for (let i = 0; i < players.length; i++) {
-            if (players[i] !== undefined) {
-                return fetch(`https://table-football-c48e9-default-rtdb.firebaseio.com/player/${players[i].id}.json`,
-                    {
-                        headers: {
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                        },
-                        method: "PUT",
-                        body: JSON.stringify({
-                            img: players[i]?.img,
-                            losses: players[i]?.losses,
-                            name: players[i]?.name,
-                            victories: players[i]?.victories
-                        })
-                    }
-                )
-                    .then(response => {
-                        return response.json()
+        return players.map(player => {
+            return fetch(`https://table-football-c48e9-default-rtdb.firebaseio.com/player/${player.id}.json`,
+                {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    method: "PUT",
+                    body: JSON.stringify({
+                        img: player?.img,
+                        losses: player?.losses,
+                        name: player?.name,
+                        victories: player?.victories
                     })
-                    .then(data => {
-                        setPlayerListTemp(playersUpdate);
-                        console.log('Success:', data);
-                    })
-                    .catch((error) => {
-                        console.error('Error:', error);
-                    });
-            }
-        }
+                }
+            )
+                .then(response => {
+                    return response.json()
+                })
+                .then(data => {
+                    setPlayerListTemp(playersUpdate);
+                    console.log('Success:', data);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        })
 
     }
 
@@ -145,14 +140,14 @@ const Board: FC = () => {
             <h1>Players Board</h1>
             <input name="search" type="search" onChange={onSearchHelper} value={searchValue} placeholder="player search" />
             {
-                searchValue === "" && 
-                <GameScoreManagement 
+                searchValue === "" &&
+                <GameScoreManagement
                     playerList={playerListTemp}
                     victoriesHandler={victoriesHandler}
-                    lossesHandler={lossesHandler} 
+                    lossesHandler={lossesHandler}
                 />
             }
-            <PlayerList 
+            <PlayerList
                 playerList={playerListSearch}
                 victoriesHandler={victoriesHandler}
                 lossesHandler={lossesHandler}

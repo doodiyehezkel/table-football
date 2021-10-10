@@ -12,11 +12,11 @@ const GameScoreManagement:FC<{playerList: PlayerModel[] ,victoriesHandler:Functi
     const onClick = () => {
         const winnersIds = winnersGroup.map(winner => winner.value)
         if(winnersIds.length!==0)
-         props.victoriesHandler(winnersIds).then(() => setIsPlayerUpdate(false))
+         props.victoriesHandler(winnersIds)//.then(() => setIsPlayerUpdate(false))
 
         const lossersIds = losersGroup.map(lossers => lossers.value)
         if(lossersIds.length!==0)
-         props.lossesHandler(lossersIds).then(() => setIsPlayerUpdate(false))
+         props.lossesHandler(lossersIds)//.then(() => setIsPlayerUpdate(false))
     }
 
 
