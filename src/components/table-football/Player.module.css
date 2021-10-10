@@ -5,7 +5,7 @@
     height: 20%;
     margin: 3rem;
   }
-  
+
   .player_card:hover {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
   }
@@ -35,8 +35,10 @@
 
   .player_button{
     display: flex;
-    align-items: center;
-    justify-content: center;
+    /* align-items: center;
+    justify-content: center; */
+    justify-content: space-evenly;
+    flex-flow: row wrap;
   }
 
   .player_button button{
@@ -59,12 +61,29 @@
       width: fit-content;
       word-break: break-word;
       border: 0;
-      margin-left: 15px;
+      /* margin-left: 15px; */
   }
 
 
   .player_button_disable button{
     background: gray;
+  }
+
+
+  @media only screen and (max-width: 720px) {
+    .player_card {
+      width: 30%;
+    }
+  }
+
+  @media only screen and (max-width: 535px) {
+    .player_card {
+      width: 50%;
+    }
+
+    .container h2{
+      font-size: 5vw;
+    }
   }
 
 

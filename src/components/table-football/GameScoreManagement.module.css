@@ -1,6 +1,8 @@
 .game_score_container{
     display: flex;
-    justify-content: center;
+    /* justify-content: center;
+    flex-flow: row wrap; */
+    justify-content: space-evenly;
     flex-flow: row wrap;
 }
 
@@ -18,7 +20,7 @@
     color: #FFFFFF;
     cursor: pointer;
     font-family: Inter,Helvetica,"Apple Color Emoji","Segoe UI Emoji",NotoColorEmoji,"Noto Color Emoji","Segoe UI Symbol","Android Emoji",EmojiSymbols,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans",sans-serif;
-    font-size: 16px;
+    font-size: 3vh;
     font-weight: 700;
     line-height: 24px;
     opacity: 1;
@@ -30,6 +32,6 @@
     width: fit-content;;
     word-break: break-word;
     border: 0;
-    margin-left: 15px;
+    /* margin-left: 15px; */
 }
 

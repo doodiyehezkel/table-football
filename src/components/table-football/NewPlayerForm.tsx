@@ -37,6 +37,21 @@ const NewPlayerForm: FC = () => {
         
     }
 
+    const imgLoaded = (event:React.ChangeEvent<HTMLInputElement>) => {
+        console.log(event.target.files);
+
+        let files = event.target.files
+        let reader = new FileReader();
+        if(files){
+            reader.readAsDataURL(files[0])
+            reader.onload = () => {
+                let base64 = reader.result;
+                console.log(base64)
+            }
+
+        }
+    }
+
     return (
         <form className={classes.form} onSubmit={onSubmitHelper}>
             <div className={`${classes.form__group} ${classes.field}`}>
@@ -46,7 +61,8 @@ const NewPlayerForm: FC = () => {
             <div className={`${classes.form__group} ${classes.field}`}>
                 <input ref={userImageRef} className={classes.form__field} required id="user-name" type="text" placeholder="Image" />
                 <label className={classes.form__label} htmlFor="user-name">Image : </label>
-            </div>
+                <input type="file" onChange={imgLoaded}/>
+            </div>            
             <div className={classes.submit}>
                 <button> Submit </button>
             </div>
