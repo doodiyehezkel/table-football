@@ -1,20 +1,20 @@
 {
   "files": {
     "main.css": "/table-football/static/css/main.e57ab52c.chunk.css",
-    "main.js": "/table-football/static/js/main.1786f31a.chunk.js",
-    "main.js.map": "/table-football/static/js/main.1786f31a.chunk.js.map",
+    "main.js": "/table-football/static/js/main.281bdec8.chunk.js",
+    "main.js.map": "/table-football/static/js/main.281bdec8.chunk.js.map",
     "runtime-main.js": "/table-football/static/js/runtime-main.f1232d21.js",
     "runtime-main.js.map": "/table-football/static/js/runtime-main.f1232d21.js.map",
-    "static/js/2.a0d91d1a.chunk.js": "/table-football/static/js/2.a0d91d1a.chunk.js",
-    "static/js/2.a0d91d1a.chunk.js.map": "/table-football/static/js/2.a0d91d1a.chunk.js.map",
+    "static/js/2.d724710e.chunk.js": "/table-football/static/js/2.d724710e.chunk.js",
+    "static/js/2.d724710e.chunk.js.map": "/table-football/static/js/2.d724710e.chunk.js.map",
     "index.html": "/table-football/index.html",
     "static/css/main.e57ab52c.chunk.css.map": "/table-football/static/css/main.e57ab52c.chunk.css.map",
-    "static/js/2.a0d91d1a.chunk.js.LICENSE.txt": "/table-football/static/js/2.a0d91d1a.chunk.js.LICENSE.txt"
+    "static/js/2.d724710e.chunk.js.LICENSE.txt": "/table-football/static/js/2.d724710e.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.f1232d21.js",
-    "static/js/2.a0d91d1a.chunk.js",
+    "static/js/2.d724710e.chunk.js",
     "static/css/main.e57ab52c.chunk.css",
-    "static/js/main.1786f31a.chunk.js"
+    "static/js/main.281bdec8.chunk.js"
   ]
 }
