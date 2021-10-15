@@ -1,6 +1,7 @@
 import { FC, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import classes from "./NewPlayerForm.module.css"
+
 const NewPlayerForm: FC = () => {
     const history = useHistory();
     const userNameRef = useRef<HTMLInputElement>(null);
@@ -19,7 +20,7 @@ const NewPlayerForm: FC = () => {
             img: userImageValue
         }
        
-        fetch('https://table-football-c48e9-default-rtdb.firebaseio.com/player.json' ,{
+        fetch('https://table-football-c48e9-default-rtdb.firebaseio.com/players.json' ,{
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

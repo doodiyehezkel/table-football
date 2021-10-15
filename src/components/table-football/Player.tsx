@@ -5,20 +5,20 @@ import classes from "./Player.module.css"
 
 import { AiFillLike, AiTwotoneDislike } from "react-icons/ai";
 
-const Player: FC<{player:PlayerModel ,victoriesHandler:Function ,lossesHandler:Function}> = ({ player,victoriesHandler,lossesHandler }) => {
+const Player: FC<{player:PlayerModel ,setScore:Function}> = ({ player,setScore}) => {
     
     const [isPlayerUpdate, setIsPlayerUpdate] = useState(false);
 
     const onClickVictories = () => {
         setIsPlayerUpdate(true)
-        victoriesHandler([player.id])[0]
-        .then(() => setIsPlayerUpdate(false))
+        setScore([{id:player.id,loseOrWin:true}])
+        .finally(()=>setIsPlayerUpdate(false))
     }
 
     const onClickLosses = () => {
         setIsPlayerUpdate(true)
-        lossesHandler([player.id])[0]
-        .then(() => setIsPlayerUpdate(false))
+        setScore([{id:player.id,loseOrWin:false}])
+        .finally(()=>setIsPlayerUpdate(false))
     }
 
 

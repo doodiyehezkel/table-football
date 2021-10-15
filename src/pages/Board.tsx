@@ -2,7 +2,7 @@ import { FC, useEffect, useState } from "react";
 import PlayerList from "../components/table-football/PlayerList";
 import { PlayerModel } from "../models/player";
 import GameScoreManagement from "../components/table-football/GameScoreManagement";
-
+import { PlayerApi } from "../api/playerApi"
 
 const Board: FC = () => {
 
@@ -15,9 +15,7 @@ const Board: FC = () => {
     const [searchValue, setSearchValue] = useState("")
 
     useEffect(() => {
-        console.log("board useEffect");
-
-        fetch('https://table-football-c48e9-default-rtdb.firebaseio.com/player.json')
+        PlayerApi.getAllPlayers()
             .then(response => response.json())
             .then(players => {
                 const playerListFetch = [];
@@ -37,8 +35,6 @@ const Board: FC = () => {
             });
     }, [])
 
-
-
     const onSearchHelper = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { value } = event.target;
         const statePlayer = playerListTemp.filter(player => {
@@ -48,88 +44,40 @@ const Board: FC = () => {
         setSearchValue(value)
     }
 
-    const victoriesHandler = (playerId: string[]) => {
-        let playersUpdate: PlayerModel[] = [...playerListTemp]
-        let players: PlayerModel[] = []
+    const setScore = (playerId: { id: string, loseOrWin: boolean }[]) => {
+        let playersUpdate: PlayerModel[] = JSON.parse(JSON.stringify(playerListTemp));
+        let players: PlayerModel[] = [];
 
-        for (let i = 0; i < playersUpdate.length; i++) {
-            for (let j = 0; j < playerId.length; j++) {
-                if (playersUpdate[i].id === playerId[j]) {
-                    playersUpdate[i].victories++
-                    players.push(playersUpdate[i])
-                }
-            }
-        }
-        return players.map(player => {
-            return fetch(`https://table-football-c48e9-default-rtdb.firebaseio.com/player/${player.id}.json`,
-                {
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    method: "PUT",
-                    body: JSON.stringify({
-                        img: player?.img,
-                        losses: player?.losses,
-                        name: player?.name,
-                        victories: player?.victories
+        const getPlayerByIdPromises = playerId.map(player => PlayerApi.getPlayerById(player.id))
+
+        return Promise.all(getPlayerByIdPromises)
+            .then(responseArray => Promise.all(responseArray.map(res => {
+                return res.json()
+            })))
+            .then(dataArray => {
+                playerId.forEach((player, index) => {
+                    if (player.loseOrWin)
+                        players.push({ ...dataArray[index], id: player.id, victories: dataArray[index].victories + 1 })
+                    else {
+                        players.push({ ...dataArray[index], id: player.id, losses: dataArray[index].losses + 1 })
+                    }
+                })
+            })
+            .then(() => {
+                const playerToUpdate = players.map(player => {
+                    return PlayerApi.updatePlayer(player)
+                })
+                return Promise.all(playerToUpdate).then(() => {
+                    playersUpdate.forEach((pu, index) => {
+                        players.forEach(p => {
+                            if (p.id === pu.id)
+                                playersUpdate[index] = { ...p }
+                        })
                     })
-                }
-            )
-                .then(response => {
-                    return response.json()
+                    setPlayerListTemp(playersUpdate)
+                    setplayerListSearch(playersUpdate)
                 })
-                .then(data => {
-                    setPlayerListTemp(playersUpdate);
-                    console.log('Success:', data);
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                });
-        })
-    }
-
-    const lossesHandler = (playerId: string) => {
-        let playersUpdate: PlayerModel[] = [...playerListTemp]
-        let players: PlayerModel[] = []
-
-        for (let i = 0; i < playersUpdate.length; i++) {
-            for (let j = 0; j < playerId.length; j++) {
-                if (playersUpdate[i].id === playerId[j]) {
-                    playersUpdate[i].losses++
-                    players.push(playersUpdate[i])
-                }
-            }
-        }
-
-        return players.map(player => {
-            return fetch(`https://table-football-c48e9-default-rtdb.firebaseio.com/player/${player.id}.json`,
-                {
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    method: "PUT",
-                    body: JSON.stringify({
-                        img: player?.img,
-                        losses: player?.losses,
-                        name: player?.name,
-                        victories: player?.victories
-                    })
-                }
-            )
-                .then(response => {
-                    return response.json()
-                })
-                .then(data => {
-                    setPlayerListTemp(playersUpdate);
-                    console.log('Success:', data);
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                });
-        })
-
+            })
     }
 
     if (!isPlayerLoaded)
@@ -143,14 +91,12 @@ const Board: FC = () => {
                 searchValue === "" &&
                 <GameScoreManagement
                     playerList={playerListTemp}
-                    victoriesHandler={victoriesHandler}
-                    lossesHandler={lossesHandler}
+                    setScore={setScore}
                 />
             }
             <PlayerList
                 playerList={playerListSearch}
-                victoriesHandler={victoriesHandler}
-                lossesHandler={lossesHandler}
+                setScore={setScore}
             />
         </>
     )

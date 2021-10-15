@@ -1,4 +1,4 @@
-import {HashRouter, BrowserRouter, Switch, Route } from "react-router-dom";
+import {HashRouter, /*BrowserRouter,*/ Switch, Route } from "react-router-dom";
 import './App.css';
 import Board from './pages/Board';
 import NewPlayer from './pages/NewPlayer';

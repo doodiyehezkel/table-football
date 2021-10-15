@@ -35,3 +35,6 @@
     /* margin-left: 15px; */
 }
 
+.game_set_disable button { 
+    background: gray;
+}

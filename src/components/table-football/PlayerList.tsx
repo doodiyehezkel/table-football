@@ -4,7 +4,7 @@ import Player from "./Player";
 import classes from "./PlayerList.module.css"
 
 
-const PlayerList: FC<{ playerList: PlayerModel[] ,victoriesHandler:Function ,lossesHandler:Function }> = ({ playerList,victoriesHandler,lossesHandler }) => {
+const PlayerList: FC<{ playerList: PlayerModel[] ,setScore:Function }> = ({ playerList,setScore}) => {
     return (
         <div className={classes.player_list_container}>
             {
@@ -12,8 +12,7 @@ const PlayerList: FC<{ playerList: PlayerModel[] ,victoriesHandler:Function ,los
                     return <Player
                         key={player.id}
                         player={player}
-                        victoriesHandler={victoriesHandler}
-                        lossesHandler={lossesHandler}
+                        setScore={setScore}
                     />
                 })
             }
